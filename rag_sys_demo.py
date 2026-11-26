@@ -1,3 +1,5 @@
+from dashscope_config import require_dashscope_api_key
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from langchain_community.document_loaders import TextLoader
@@ -7,6 +9,9 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai.chat_models import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
+
+
+api_key = require_dashscope_api_key()
 
 
 #==============================================
@@ -26,7 +31,7 @@ docs = splitter.split_documents(documents)
 #embedding
 embeddings = OpenAIEmbeddings(
     model="text-embedding-v4",
-    api_key = "sk-ec67bb0bcfea4afab1740cc5d83a7c81",
+    api_key = api_key,
     base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1",
     check_embedding_ctx_length=False,
     chunk_size=10
@@ -56,7 +61,7 @@ prompt = ChatPromptTemplate.from_template(
 model = ChatOpenAI(
     model="qwen-plus",
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
-    api_key="sk-ec67bb0bcfea4afab1740cc5d83a7c81"
+    api_key=api_key
 )
 
 #response

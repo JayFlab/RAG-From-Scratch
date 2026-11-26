@@ -1,12 +1,17 @@
+from dashscope_config import require_dashscope_api_key
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from openai import OpenAI
 
 app = FastAPI()
 
+api_key = require_dashscope_api_key()
+
+
 #初始化对应的服务对象
 client = OpenAI(
-    api_key="sk-ec67bb0bcfea4afab1740cc5d83a7c81",
+    api_key=api_key,
     base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
 )
 
